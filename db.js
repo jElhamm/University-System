@@ -8,3 +8,14 @@ mongoose
 	})
 	.then(() => console.log("Connected to MongoDB using Mongoose"))
 	.catch((err) => console.error("Connection failed!", err));
+
+
+// User
+// Specifying Schema -- not essential
+const userSchema = new mongoose.Schema({
+	username: String,
+	email: String,
+	password: String,
+	balance: Number,
+});
+const User = mongoose.model("User", userSchema);
