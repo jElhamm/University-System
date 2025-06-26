@@ -19,3 +19,14 @@ const userSchema = new mongoose.Schema({
 	balance: Number,
 });
 const User = mongoose.model("User", userSchema);
+
+
+// Reserve
+const reserveSchema = new mongoose.Schema({
+	userId: String,
+	reserveDate: Date,
+	foodName: String,
+	restaurantName: String,
+	price: Number,
+});
+const Reserve = mongoose.model("Reserve", reserveSchema);
