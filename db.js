@@ -30,3 +30,23 @@ const reserveSchema = new mongoose.Schema({
 	price: Number,
 });
 const Reserve = mongoose.model("Reserve", reserveSchema);
+
+
+// Food
+const foodSchema = new mongoose.Schema({
+  name: String,
+  image: String,  // اینجا فقط URL تصویر رو ذخیره می‌کنیم
+  price: Number,
+});
+
+const Food = mongoose.model("Food", foodSchema);
+const courseSchema = new mongoose.Schema({
+    semester: String,
+    code: String,
+    name: String,
+    group: String,
+    professor: String,
+    units: Number,
+});
+const Course = mongoose.model("Course", courseSchema);
+
