@@ -50,3 +50,13 @@ const courseSchema = new mongoose.Schema({
 });
 const Course = mongoose.model("Course", courseSchema);
 
+
+// Request model
+const requestSchema = new mongoose.Schema({
+  title: String,
+  from: String,
+  body: String,
+  status: { type: String, default: "submitted" },
+  createdAt: { type: Date, default: Date.now }
+});
+const Request = mongoose.model("Request", requestSchema);
