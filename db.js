@@ -60,3 +60,13 @@ const requestSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now }
 });
 const Request = mongoose.model("Request", requestSchema);
+
+
+// News model
+const newsSchema = new mongoose.Schema({
+  title: String,
+  body: String,
+  image: String
+}, { timestamps: true });
+
+const News = mongoose.model("News", newsSchema);
