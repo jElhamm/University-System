@@ -70,3 +70,17 @@ const newsSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 const News = mongoose.model("News", newsSchema);
+
+
+// Finance model
+const financeSchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  transactions: [{
+    date: { type: Date, default: Date.now },
+    desc: String,
+    amount: Number,
+    type: { type: String, enum: ["credit", "debit"] }
+  }]
+});
+
+const Finance = mongoose.model("Finance", financeSchema);
