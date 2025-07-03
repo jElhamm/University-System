@@ -84,3 +84,12 @@ const financeSchema = new mongoose.Schema({
 });
 
 const Finance = mongoose.model("Finance", financeSchema);
+
+
+module.exports.User = User;
+module.exports.Reserve = Reserve;
+module.exports.Food = Food;
+module.exports.Course = Course;
+module.exports.Request = Request;
+module.exports.News = News;
+module.exports.Finance = Finance;
