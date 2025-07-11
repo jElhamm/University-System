@@ -20,10 +20,17 @@ function serveFile(filePath, contentType, res) {
 }
 
 const server = http.createServer(async (req, res) => {
-	// To load index.html
 	if (req.url === "/" && req.method === "GET") {
 		serveFile(
 			path.join(__dirname, "public", "index.html"),
+			"text/html",
+			res
+		);
+	}
+
+	else if (req.url === "/signup" && req.method === "GET") {
+		serveFile(
+			path.join(__dirname, "public", "signup.html"),
 			"text/html",
 			res
 		);
