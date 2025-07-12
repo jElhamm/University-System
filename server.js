@@ -35,3 +35,11 @@ const server = http.createServer(async (req, res) => {
 			res
 		);
 	}
+	
+	else if (req.url === "/login" && req.method === "GET") {
+		serveFile(
+			path.join(__dirname, "public", "login.html"),
+			"text/html",
+			res
+		);
+	}
