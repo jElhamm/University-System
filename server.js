@@ -43,3 +43,11 @@ const server = http.createServer(async (req, res) => {
 			res
 		);
 	}
+
+	else if (req.url === "/Dashboard" && req.method === "GET") {
+		serveFile(
+			path.join(__dirname, "public", "dashboard.html"),
+			"text/html",
+			res
+		);
+	}
