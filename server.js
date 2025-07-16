@@ -51,3 +51,11 @@ const server = http.createServer(async (req, res) => {
 			res
 		);
 	}
+
+	else if (req.url === "/Food" && req.method === "GET") {
+		serveFile(
+			path.join(__dirname, "public", "food.html"),
+			"text/html",
+			res
+		);
+	}
