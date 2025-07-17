@@ -59,3 +59,7 @@ const server = http.createServer(async (req, res) => {
 			res
 		);
 	}
+
+	else if (req.url === "/courses" && req.method === "GET") {
+		serveFile(path.join(__dirname, "public", "courses.html"), "text/html", res);
+	}
