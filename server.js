@@ -75,3 +75,23 @@ const server = http.createServer(async (req, res) => {
 	else if (req.url === "/finance" && req.method === "GET") {
 		serveFile(path.join(__dirname, "public", "finance.html"), "text/html", res);
 	}
+	
+	else if (req.url === "/api/foods" && req.method === "GET") {
+		Food.find()
+			.then((foods) => {
+			const foodsWithImages = foods.map((food) => ({
+				name: food.name,
+				price: food.price,
+				image: food.image,  // مستقیم URL را ارسال می‌کنیم
+			}));
+			res.writeHead(200, { "Content-Type": "application/json" });
+			res.end(JSON.stringify(foodsWithImages));
+			})
+			.catch((err) => {
+			console.error("Error fetching foods:", err);
+			res.writeHead(500, { "Content-Type": "application/json" });
+			res.end(
+				JSON.stringify({ message: "خطا در دریافت لیست غذاها" })
+			);
+			});
+		}
