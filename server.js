@@ -95,3 +95,30 @@ const server = http.createServer(async (req, res) => {
 			);
 			});
 		}
+
+	else if (req.url.startsWith("/api/user/") && req.method === "GET") {
+		const userId = req.url.split("/")[3];
+
+		if (!userId) {
+			res.writeHead(400, { "Content-Type": "application/json" });
+			res.end(JSON.stringify({ message: "User ID is required" }));
+			return;
+		}
+
+		User.findById(userId)
+			.select("-password")
+			.then((user) => {
+				if (!user) {
+					res.writeHead(404, { "Content-Type": "application/json" });
+					res.end(JSON.stringify({ message: "User not found" }));
+					return;
+				}
+				res.writeHead(200, { "Content-Type": "application/json" });
+				res.end(JSON.stringify(user));
+			})
+			.catch((err) => {
+				console.error("Error fetching user by ID:", err);
+				res.writeHead(500, { "Content-Type": "application/json" });
+				res.end(JSON.stringify({ message: "خطا در دریافت کاربر" }));
+			});
+	}
