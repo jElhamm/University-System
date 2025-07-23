@@ -122,3 +122,67 @@ const server = http.createServer(async (req, res) => {
 				res.end(JSON.stringify({ message: "خطا در دریافت کاربر" }));
 			});
 	}
+
+	else if (req.url.startsWith("/api/user/") && req.method === "PUT") {
+		const userId = req.url.split("/")[3];
+
+		let body = "";
+		req.on("data", (chunk) => {
+			body += chunk.toString();
+		});
+
+		req.on("end", async () => {
+			try {
+				const data = JSON.parse(body);
+
+				// Validate input
+				if (!data.username || typeof data.username !== "string") {
+					res.writeHead(400, { "Content-Type": "application/json" });
+					return res.end(
+						JSON.stringify({ message: "نام کاربری معتبر نیست" })
+					);
+				}
+
+				let updateFields;
+
+				if (data.username) {
+					updateFields = { username: data.username };
+				}
+
+				if (data.password) {
+					const saltRounds = 10;
+					const hashedPassword = await bcrypt.hash(
+						data.password,
+						saltRounds
+					);
+					updateFields.password = hashedPassword;
+				}
+
+				const updatedUser = await User.findByIdAndUpdate(
+					userId,
+					updateFields,
+					{ new: true, runValidators: true }
+				);
+
+				if (!updatedUser) {
+					res.writeHead(404, { "Content-Type": "application/json" });
+					return res.end(
+						JSON.stringify({ message: "کاربر یافت نشد" })
+					);
+				}
+
+				res.writeHead(200, { "Content-Type": "application/json" });
+				res.end(
+					JSON.stringify({
+						message: "اطلاعات با موفقیت بروزرسانی شد",
+					})
+				);
+			} catch (err) {
+				console.error("Error updating user:", err);
+				res.writeHead(500, { "Content-Type": "application/json" });
+				res.end(
+					JSON.stringify({ message: "خطا در بروزرسانی اطلاعات" })
+				);
+			}
+		});
+	}
