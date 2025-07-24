@@ -186,3 +186,30 @@ const server = http.createServer(async (req, res) => {
 			}
 		});
 	}
+
+	else if (req.url.startsWith("/api/reserves") && req.method === "GET") {
+		const urlParts = new URL(req.url, `http://${req.headers.host}`);
+		const userId = urlParts.searchParams.get("userId");
+		const dateParam = urlParts.searchParams.get("date");
+
+		const date = new Date(dateParam);
+
+		Reserve.find({
+			userId,
+			reserveDate: date,
+		})
+			.then((reserves) => {
+				res.writeHead(200, { "Content-Type": "application/json" });
+				res.end(JSON.stringify(reserves));
+			})
+			.catch((err) => {
+				console.error("Error fetching reserves:", err);
+				res.writeHead(500, { "Content-Type": "application/json" });
+				res.end(
+					JSON.stringify({
+						message: "خطا در دریافت رزروها",
+						error: err.message,
+					})
+				);
+			});
+	}
