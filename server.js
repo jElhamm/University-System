@@ -213,3 +213,23 @@ const server = http.createServer(async (req, res) => {
 				);
 			});
 	}
+
+	else if (req.url.startsWith("/api/reserves/") && req.method === "DELETE") {
+		const id = req.url.split("/").pop();
+
+		Reserve.findByIdAndDelete(id)
+			.then(() => {
+				res.writeHead(200, { "Content-Type": "application/json" });
+				res.end(JSON.stringify({ message: "رزرو حذف شد" }));
+			})
+			.catch((err) => {
+				console.error("Error deleting reserve:", err);
+				res.writeHead(500, { "Content-Type": "application/json" });
+				res.end(
+					JSON.stringify({
+						message: "حذف رزرو با خطا مواجه شد",
+						error: err.message,
+					})
+				);
+			});
+	}
