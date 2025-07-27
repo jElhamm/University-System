@@ -233,3 +233,53 @@ const server = http.createServer(async (req, res) => {
 				);
 			});
 	}
+
+	else if (req.url === "/signup" && req.method === "POST") {
+		// To gather user info and put them together
+		let body = "";
+		req.on("data", (chunk) => {
+			body += chunk.toString();
+		});
+
+		// Listening for end of req
+		req.on("end", async () => {
+			try {
+				const data = querystring.parse(body);
+				const { username, email, password } = data;
+
+				// Checking user Existence
+				const userExitence = await User.findOne({ username });
+
+				if (userExitence) {
+					res.writeHead(400, { "Content-Type": "application/json" });
+					res.end(JSON.stringify({ message: "User Exists!" }));
+					return;
+				}
+
+				// Hashing password
+				const hashedPassword = await bcrypt.hash(password, 10);
+				const newUser = new User({
+					username,
+					email,
+					password: hashedPassword,
+				});
+
+				// Saving data in db
+				await newUser.save();
+
+				// Sending result to front
+				res.writeHead(200, { "Content-Type": "application/json" });
+				res.end(JSON.stringify({ message: "Signup Successful!" }));
+			} catch (err) {
+				// Sending error to front
+				console.error("Signup Error:", err);
+				res.writeHead(500, { "Content-Type": "application/json" });
+				res.end(
+					JSON.stringify({
+						message: "Signup failed!",
+						error: err.message,
+					})
+				);
+			}
+		});
+	}
