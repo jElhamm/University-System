@@ -283,3 +283,47 @@ const server = http.createServer(async (req, res) => {
 			}
 		});
 	}
+
+	else if (req.url === "/login" && req.method === "POST") {
+		let body = "";
+		req.on("data", (chunk) => {
+			body += chunk.toString();
+		});
+
+		req.on("end", async () => {
+			try {
+				const data = querystring.parse(body);
+				const { username, password } = data;
+
+				// Checking db for user
+				const user = await User.findOne({ username });
+
+				// Returning not found error if there is no user with given username
+				if (!user) {
+					res.writeHead(400, { "Content-Type": "application/json" });
+					res.end(JSON.stringify({ message: "User Not Found!" }));
+					return;
+				}
+
+				// Returning error if password is wrong
+				const isMatch = await bcrypt.compare(password, user.password);
+				if (!isMatch) {
+					res.writeHead(400, { "Content-Type": "application/json" });
+					res.end(JSON.stringify({ message: "Wrong Password!" }));
+					return;
+				}
+
+				res.writeHead(200, { "Content-Type": "application/json" });
+				res.end(
+					JSON.stringify({
+						message: "Login Successful!",
+						id: user.id,
+					})
+				);
+			} catch (err) {
+				console.error("Login Error:", err);
+				res.writeHead(500, { "Content-Type": "application/json" });
+				res.end(JSON.stringify({ message: "Login Failed!" }));
+			}
+		});
+	}
