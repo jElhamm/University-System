@@ -327,3 +327,49 @@ const server = http.createServer(async (req, res) => {
 			}
 		});
 	}
+
+	else if (req.url === "/api/Reserve" && req.method === "POST") {
+		let body = "";
+		req.on("data", (chunk) => {
+			body += chunk.toString();
+		});
+
+		req.on("end", async () => {
+			try {
+				const data = querystring.parse(body);
+				const { userId, date, food, restaurant } = data;
+
+				const foodDoc = await Food.findOne({ name: food });
+				const price = foodDoc?.price;
+
+				if (!foodDoc) {
+					res.writeHead(404, { "Content-Type": "application/json" });
+					return res.end(
+						JSON.stringify({ message: "Food not found" })
+					);
+				}
+
+				const newReserve = new Reserve({
+					userId,
+					reserveDate: new Date(date),
+					foodName: food,
+					restaurantName: restaurant,
+					price,
+				});
+
+				await newReserve.save();
+
+				res.writeHead(200, { "Content-Type": "application/json" });
+				res.end(JSON.stringify({ message: "Reserve Successful!" }));
+			} catch (err) {
+				console.error("Reserve Error:", err);
+				res.writeHead(500, { "Content-Type": "application/json" });
+				res.end(
+					JSON.stringify({
+						message: "Reserve failed!",
+						error: err.message,
+					})
+				);
+			}
+		});
+	}
