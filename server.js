@@ -373,3 +373,7 @@ const server = http.createServer(async (req, res) => {
 			}
 		});
 	}
+
+	else if (req.url.endsWith(".css")) {
+		serveFile(path.join(__dirname, "public", req.url), "text/css", res);
+	}
