@@ -377,3 +377,18 @@ const server = http.createServer(async (req, res) => {
 	else if (req.url.endsWith(".css")) {
 		serveFile(path.join(__dirname, "public", req.url), "text/css", res);
 	}
+
+	else if (req.url.match(/\.(jpg|jpeg|png|gif|svg)$/)) {
+		const ext = path.extname(req.url).toLowerCase();
+		const types = {
+			".jpg": "image/jpeg",
+			".jpeg": "image/jpeg",
+			".png": "image/png",
+			".gif": "image/gif",
+			".svg": "image/svg+xml",
+		};
+
+		const filePath = path.join(__dirname, "public", req.url);
+		const contentType = types[ext] || "application/octet-stream";
+		serveFile(filePath, contentType, res);
+	}
