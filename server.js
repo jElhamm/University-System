@@ -392,3 +392,11 @@ const server = http.createServer(async (req, res) => {
 		const contentType = types[ext] || "application/octet-stream";
 		serveFile(filePath, contentType, res);
 	}
+
+	else if (req.url.endsWith(".js")) {
+		serveFile(
+			path.join(__dirname, "public", req.url),
+			"application/javascript",
+			res
+		);
+	}
