@@ -400,3 +400,11 @@ const server = http.createServer(async (req, res) => {
 			res
 		);
 	}
+
+	else if (req.url.endsWith(".js")) {
+		serveFile(
+			path.join(__dirname, "", req.url),
+			"application/javascript",
+			res
+		);
+	}
