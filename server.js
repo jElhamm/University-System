@@ -408,3 +408,67 @@ const server = http.createServer(async (req, res) => {
 			res
 		);
 	}
+
+	else if (req.url === "/update-profile" && req.method === "POST") {
+		let body = "";
+		req.on("data", (chunk) => {
+			body += chunk.toString();
+		});
+
+		req.on("end", async () => {
+			try {
+				const data = JSON.parse(body);
+				const { username, newPassword } = data;
+
+				// This username is the new username user wants to set
+				const existingUser = await User.findOne({ username });
+
+				// Prevent duplication if user is trying to change their username
+				if (existingUser && existingUser.username !== username) {
+					res.writeHead(400, { "Content-Type": "application/json" });
+					res.end(
+						JSON.stringify({
+							message: "این نام کاربری قبلاً ثبت شده است.",
+						})
+					);
+					return;
+				}
+
+				// Get the current username from localStorage (sent manually in body or cookie in real apps)
+				const currentUsername = req.headers["x-current-username"];
+				const user = await User.findOne({ username: currentUsername });
+
+				if (!user) {
+					res.writeHead(404, { "Content-Type": "application/json" });
+					res.end(JSON.stringify({ message: "کاربر یافت نشد." }));
+					return;
+				}
+
+				// Update username if changed
+				if (username && username !== currentUsername) {
+					user.username = username;
+				}
+
+				// Update password if requested
+				if (newPassword) {
+					const hashedPassword = await bcrypt.hash(newPassword, 10);
+					user.password = hashedPassword;
+				}
+
+				await user.save();
+
+				res.writeHead(200, { "Content-Type": "application/json" });
+				res.end(
+					JSON.stringify({
+						message: "پروفایل با موفقیت بروزرسانی شد.",
+					})
+				);
+			} catch (err) {
+				console.error("Update profile error:", err);
+				res.writeHead(500, { "Content-Type": "application/json" });
+				res.end(
+					JSON.stringify({ message: "خطا در بروزرسانی پروفایل." })
+				);
+			}
+		});
+	}
