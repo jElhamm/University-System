@@ -472,3 +472,15 @@ const server = http.createServer(async (req, res) => {
 			}
 		});
 	}
+
+	else if (req.url === "/api/semesters" && req.method === "GET") {
+		Course.distinct("semester")
+			.then((semesters) => {
+				res.writeHead(200, { "Content-Type": "application/json" });
+				res.end(JSON.stringify(semesters));
+			})
+			.catch((err) => {
+				res.writeHead(500, { "Content-Type": "application/json" });
+				res.end(JSON.stringify({ message: "خطا در دریافت ترم‌ها" }));
+			});
+	}
