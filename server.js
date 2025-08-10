@@ -484,3 +484,22 @@ const server = http.createServer(async (req, res) => {
 				res.end(JSON.stringify({ message: "خطا در دریافت ترم‌ها" }));
 			});
 	}
+
+	else if (req.url.startsWith("/api/courses") && req.method === "GET") {
+		const urlParts = new URL(req.url, `http://${req.headers.host}`);
+		const semester = urlParts.searchParams.get("semester");
+		if (!semester) {
+			res.writeHead(400, { "Content-Type": "application/json" });
+			res.end(JSON.stringify({ message: "ترم مشخص نشده است" }));
+			return;
+		}
+		Course.find({ semester })
+			.then((courses) => {
+				res.writeHead(200, { "Content-Type": "application/json" });
+				res.end(JSON.stringify(courses));
+			})
+			.catch((err) => {
+				res.writeHead(500, { "Content-Type": "application/json" });
+				res.end(JSON.stringify({ message: "خطا در دریافت دروس" }));
+			});
+	}
