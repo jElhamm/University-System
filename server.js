@@ -503,3 +503,15 @@ const server = http.createServer(async (req, res) => {
 				res.end(JSON.stringify({ message: "خطا در دریافت دروس" }));
 			});
 	}
+
+	else if (req.url === "/api/requests" && req.method === "GET") {
+		Request.find().sort({ createdAt: -1 })
+			.then((requests) => {
+				res.writeHead(200, { "Content-Type": "application/json" });
+				res.end(JSON.stringify(requests));
+			})
+			.catch((err) => {
+				res.writeHead(500, { "Content-Type": "application/json" });
+				res.end(JSON.stringify({ message: "خطا در دریافت درخواست‌ها" }));
+			});
+	}
