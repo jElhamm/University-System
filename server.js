@@ -515,3 +515,22 @@ const server = http.createServer(async (req, res) => {
 				res.end(JSON.stringify({ message: "خطا در دریافت درخواست‌ها" }));
 			});
 	}
+
+	else if (req.url === "/api/requests" && req.method === "POST") {
+		let body = "";
+		req.on("data", chunk => {
+			body += chunk.toString();
+		});
+		req.on("end", async () => {
+			try {
+				const { title, from, body: requestBody } = JSON.parse(body);
+				const request = new Request({ title, from, body: requestBody });
+				await request.save();
+				res.writeHead(200, { "Content-Type": "application/json" });
+				res.end(JSON.stringify({ success: true, request }));
+			} catch (err) {
+				res.writeHead(500, { "Content-Type": "application/json" });
+				res.end(JSON.stringify({ success: false, message: "خطا در ثبت درخواست" }));
+			}
+		});
+	}
