@@ -534,3 +534,15 @@ const server = http.createServer(async (req, res) => {
 			}
 		});
 	}
+
+	else if (req.url === "/api/news" && req.method === "GET") {
+		News.find().sort({ createdAt: -1 })
+			.then((newsItems) => {
+				res.writeHead(200, { "Content-Type": "application/json" });
+				res.end(JSON.stringify(newsItems));
+			})
+			.catch((err) => {
+				res.writeHead(500, { "Content-Type": "application/json" });
+				res.end(JSON.stringify({ message: "خطا در دریافت اخبار" }));
+			});
+	}
