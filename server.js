@@ -546,3 +546,22 @@ const server = http.createServer(async (req, res) => {
 				res.end(JSON.stringify({ message: "خطا در دریافت اخبار" }));
 			});
 	}
+
+	else if (req.url === "/api/news" && req.method === "POST") {
+		let body = "";
+		req.on("data", chunk => {
+			body += chunk.toString();
+		});
+		req.on("end", async () => {
+			try {
+				const { title, body: newsBody, image } = JSON.parse(body);
+				const news = new News({ title, body: newsBody, image });
+				await news.save();
+				res.writeHead(200, { "Content-Type": "application/json" });
+				res.end(JSON.stringify({ success: true, news }));
+			} catch (err) {
+				res.writeHead(500, { "Content-Type": "application/json" });
+				res.end(JSON.stringify({ success: false, message: "خطا در ثبت خبر" }));
+			}
+		});
+	}
