@@ -565,3 +565,39 @@ const server = http.createServer(async (req, res) => {
 			}
 		});
 	}
+
+	else if (req.url.startsWith("/api/finance") && req.method === "GET") {
+		// دریافت وضعیت مالی و تراکنش‌های کاربر (userId از کوئری)
+		const urlObj = new URL(req.url, `http://${req.headers.host}`);
+		const userId = urlObj.searchParams.get("userId");
+
+		if (!userId) {
+			res.writeHead(400, { "Content-Type": "application/json" });
+			return res.end(JSON.stringify({ success: false, message: "شناسه کاربر ارسال نشده است." }));
+		}
+
+		try {
+			let finance = await Finance.findOne({ userId });
+			if (!finance) {
+			// اگر سند وجود ندارد، ایجاد سند خالی
+			finance = new Finance({ userId, transactions: [] });
+			await finance.save();
+			}
+			
+			// محاسبه موجودی کلی (بستانکاری منفی = بدهی)
+			let balance = 0;
+			finance.transactions.forEach(t => {
+			balance += t.type === "credit" ? t.amount : -t.amount;
+			});
+
+			res.writeHead(200, { "Content-Type": "application/json" });
+			res.end(JSON.stringify({
+			success: true,
+			balance,
+			transactions: finance.transactions
+			}));
+		} catch (error) {
+			res.writeHead(500, { "Content-Type": "application/json" });
+			res.end(JSON.stringify({ success: false, message: "خطا در دریافت اطلاعات مالی" }));
+		}
+	}
