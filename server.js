@@ -601,3 +601,38 @@ const server = http.createServer(async (req, res) => {
 			res.end(JSON.stringify({ success: false, message: "خطا در دریافت اطلاعات مالی" }));
 		}
 	}
+
+	else if (req.url === "/api/finance" && req.method === "POST") {
+		let body = "";
+		req.on("data", chunk => { body += chunk.toString(); });
+		req.on("end", async () => {
+			try {
+			const { userId, amount } = JSON.parse(body);
+
+			if (!userId || !amount || amount <= 0) {
+				res.writeHead(400, { "Content-Type": "application/json" });
+				return res.end(JSON.stringify({ success: false, message: "داده‌های نامعتبر" }));
+			}
+
+			let finance = await Finance.findOne({ userId });
+			if (!finance) {
+				finance = new Finance({ userId, transactions: [] });
+			}
+
+			finance.transactions.push({
+				date: new Date(),
+				desc: "پرداخت و افزایش موجودی",
+				amount,
+				type: "credit"
+			});
+
+			await finance.save();
+
+			res.writeHead(200, { "Content-Type": "application/json" });
+			res.end(JSON.stringify({ success: true, message: "پرداخت با موفقیت ثبت شد." }));
+			} catch (error) {
+			res.writeHead(500, { "Content-Type": "application/json" });
+			res.end(JSON.stringify({ success: false, message: "خطا در ثبت پرداخت" }));
+			}
+		});
+	}
