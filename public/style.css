@@ -1,0 +1,162 @@
+* , body {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+  direction: rtl;
+}
+
+.index_container {
+  background: url("./image/Back_img.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+}
+
+.index_card{
+  margin-top : 35vh;
+  width: 30vw;
+  height: 30vh;
+  background: rgba(194, 220, 225, 0.464);
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 40px;
+  color: rgb(40, 40, 199);
+  font-weight: 600;
+  font-size: xx-large;
+}
+
+.index_btnBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 35px;
+}
+
+.index_btnBox button {
+  width: 120px;
+  height: 45px;
+  border-radius: 8px;
+  border: none;
+  background: rgb(61, 61, 180);
+  color: white;
+  font-size: large;
+  cursor: pointer;
+}
+
+.login_container , .signup_container, .dashboard_container{
+  background-color: blueviolet;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+}
+
+.dashboard_container {
+  background-color: white;
+}
+
+.login_card , .signup_card {
+  margin-top: 32vh;
+  height: 40vh;
+  width: 30vw;
+  background-color: white;
+  border-radius: 10px;
+  gap: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: xx-large;
+  font-weight: 600;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  box-shadow: gray 0px 0px 2px 3px;
+  color: blueviolet;
+}
+
+#loginForm , #signupForm {
+  display: flex;
+  justify-content: center;
+  align-items: centre;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.signup_card {
+  height: 43.4vh;
+}
+
+.login_card input , .signup_card input {
+  width: 25vw;
+  height: 5vh;
+  border-radius: 5px;
+  border: 2px solid gray;
+  padding: 10px;
+  direction: rtl;
+  text-align: left;
+}
+
+input::placeholder {
+  direction: rtl;
+  text-align: left;
+}
+
+.login_card button , .signup_card button {
+  width: 25vw;
+  height: 5vh;
+  border-radius: 5px;
+  border: none;
+  background: blueviolet;
+  color: white;
+  font-size: large;
+}
+
+.signup_card button {
+  width: 25vw;
+  height: 5vh;
+  border-radius: 5px;
+  border: none;
+  background: blueviolet;
+  color: white;
+  font-size: large;
+}
+
+.dashboard_container {
+  justify-content: flex-start;
+}
+
+.dashboard_navbar {
+  width: 250px;
+  height: 100%;
+  background: rgb(161, 159, 159);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 30px;
+}
+
+.navbar_container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+  padding-top: 30px;
+}
+
+.dashboard_navbar button {
+  width: 200px;
+  height: 50px;
+  font-size: large;
+  font-weight: 800;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
