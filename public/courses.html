@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>لیست دروس نیمسال</title>
+  <link rel="stylesheet" href="./courses.css">
+  <link rel="stylesheet" href="./dashboard.style.css" />
+</head>
+<body>
+
+  <div class="dashboard_container">
+    <div class="dashboard_sidebar">
+      <div class="dashboard_header">
+        <img src="./image/profile.jpg" alt="Profile" class="profile_avatar" />
+        <h3>پروفایل کاربر</h3>
+      </div>
+
+      <div class="navbar_container">
+        <button><a href="/Food">رزرو غذا</a></button>
+        <button><a href="/requests">درخواست ها</a></button>
+        <button><a href="/courses">لیست دروس امسال</a></button>
+        <button>پرداخت ها و امور مالی</button>
+        <button><a href="/news">پیام ها و اطلاعیه ها</a></button>
+      </div>
+    </div>
+
+    <div class="course-container">
+      <h2>لیست دروس نیمسال</h2>
+      <select id="semesterSelect" class="semester-select">
+        <option value="">انتخاب نیمسال تحصیلی...</option>
+      </select>
+
+      <table id="coursesTable" style="display:none;">
+        <thead>
+          <tr>
+            <th>کد درس</th>
+            <th>نام درس</th>
+            <th>کد گروه</th>
+            <th>نام استاد</th>
+            <th>تعداد واحد</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+
+      <div id="noCourses" class="no-courses" style="display:none;">
+        درسی برای این ترم وجود ندارد.
+      </div>
+    </div>
+  </div>
+
+  <script src="Courses.js"></script>
+</body>
+</html>
