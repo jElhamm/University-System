@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fa">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>پرداخت‌ها و امور مالی</title>
+  <link rel="stylesheet" href="finance.css" />
+  <link rel="stylesheet" href="./dashboard.style.css" />
+  
+</head>
+
+<body>
+    <div class="dashboard_container">
+    <div class="dashboard_sidebar">
+      <div class="dashboard_header">
+        <img src="./image/profile.jpg" alt="Profile" class="profile_avatar" />
+        <h3>پروفایل کاربر</h3>
+      </div>
+
+      <div class="navbar_container">
+        <button><a href="/Food">رزرو غذا</a></button>
+        <button><a href="/requests">درخواست ها</a></button>
+        <button><a href="/courses">لیست دروس امسال</a></button>
+        <button><a href="/finance">پرداخت ها و امور مالی</a></button>
+        <button><a href="/news">پیام ها و اطلاعیه ها</a></button>
+      </div>
+    </div>
+
+  <div class="container">
+    <h1>پرداخت‌ها و امور مالی</h1>
+
+    <div class="balance-info">
+      وضعیت مالی شما: 
+      <span id="balance-display" class="positive">0 تومان</span>
+    </div>
+
+    <div class="actions">
+      <button id="btn-open-payment">افزایش موجودی / پرداخت بدهی</button>
+      <button id="btn-add-debt" style="background-color:#dc3545; margin-right: 15px;">ثبت بدهی جدید</button>
+    </div>
+
+    <h3>تراکنش‌های مالی</h3>
+    <table id="transactions-table">
+      <thead>
+        <tr>
+          <th>تاریخ</th>
+          <th>شرح</th>
+          <th>مبلغ (تومان)</th>
+          <th>نوع تراکنش</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- مودال پرداخت -->
+  <div id="payment-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" id="close-payment-modal">&times;</span>
+      <h2>پرداخت و افزایش موجودی</h2>
+      <label for="payment-amount">مبلغ پرداخت (تومان):</label>
+      <input type="number" id="payment-amount" min="1" placeholder="مثلاً 100000" />
+      <button id="confirm-payment-btn">پرداخت</button>
+    </div>
+  </div>
+
+  <!-- مودال ثبت بدهی -->
+  <div id="debt-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" id="close-debt-modal">&times;</span>
+      <h2>ثبت بدهی جدید</h2>
+      <label for="debt-amount">مبلغ بدهی (تومان):</label>
+      <input type="number" id="debt-amount" min="1" placeholder="مثلاً 50000" />
+      <label for="debt-desc">شرح بدهی:</label>
+      <input type="text" id="debt-desc" placeholder="مثلاً هزینه کارگاه" />
+      <button id="confirm-debt-btn" style="background-color:#dc3545;">ثبت بدهی</button>
+    </div>
+  </div>
+
+  <script src="Finance.js"></script>
+</body>
+
+</html>
