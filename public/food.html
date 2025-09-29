@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="./food.style.css" />
+  <link rel="stylesheet" href="./dashboard.style.css" />
+  <title>Food</title>
+</head>
+
+<body>
+  <div class="background-overlay"></div>
+  <div class="dashboard_container">
+    <div class="dashboard_sidebar">
+      <div class="dashboard_header">
+        <img src="./image/profile.jpg" alt="Profile" class="profile_avatar" />
+        <h3>پروفایل کاربر</h3>
+      </div>
+
+      <div class="navbar_container">
+        <button><a href="/Food">رزرو غذا</a></button>
+        <button><a href="/requests">درخواست ها</a></button>
+        <button><a href="/courses">لیست دروس امسال</a></button>
+        <button><a href="/finance">پرداخت ها و امور مالی</a></button>
+        <button><a href="/news">پیام ها و اطلاعیه ها</a></button>
+      </div>
+    </div>
+
+    <div class="container">
+      <!-- موجودی -->
+      <div class="balance-section">
+        <span>موجودی: <strong id="balance">120,000</strong> تومان</span>
+        <button id="add-balance-btn">افزایش موجودی</button>
+      </div>
+
+      <!-- فرم رزرو -->
+      <form action="/Food" method="post" id="ReserveForm" class="form-section">
+
+        <!-- انتخاب رستوران -->
+        <label for="restaurant">رستوران:</label>
+        <select id="restaurant" name="restaurant">
+          <option value="">انتخاب کنید</option>
+          <option value="رستوران سبحان">رستوران سبحان</option>
+          <option value="سلف مرکزی (خواهران)">سلف مرکزی (خواهران)</option>
+        </select>
+
+        <!-- انتخاب تاریخ -->
+        <label for="date">تاریخ:</label>
+        <input type="date" name="date" id="date" />
+
+        <!-- انتخاب غذا -->
+        <label>انتخاب غذا:</label>
+        <div id="food-list" class="food-list">
+        </div>
+
+        <button type="submit" id="add-meal-btn">
+          افزودن
+        </button>
+      </form>
+
+      <!-- لیست غذاهای رزرو شده -->
+      <div id="list-section" class="list-section" style="display: none;">
+        <table>
+          <thead>
+            <tr>
+              <th>تاریخ</th>
+              <th>غذا</th>
+              <th>رستوران</th>
+              <th>قیمت</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="order-list">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- مودال افزایش موجودی -->
+  <div id="balance-modal" class="modal">
+    <div class="modal-content">
+      <span id="close-modal" class="close">&times;</span>
+      <h3>افزایش موجودی</h3>
+      <input type="number" id="balance-input" placeholder="مبلغ را وارد کنید" min="1" />
+      <button id="confirm-add-balance">افزودن</button>
+    </div>
+  </div>
+
+  <script src="Food.js"></script>
+
+</body>
+
+</html>
