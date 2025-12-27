@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>درخواست‌های دانشجو</title>
+  <link rel="stylesheet" href="./requests.css" />
+  <link rel="stylesheet" href="./dashboard.style.css" />
+</head>
+<body>
+  <div class="dashboard_container">
+    <div class="dashboard_sidebar">
+      <div class="dashboard_header">
+        <img src="./image/profile.jpg" alt="Profile" class="profile_avatar" />
+        <h3>پروفایل کاربر</h3>
+      </div>
+
+      <div class="navbar_container">
+        <button><a href="/Food">رزرو غذا</a></button>
+        <button><a href="/requests">درخواست ها</a></button>
+        <button><a href="/courses">لیست دروس امسال</a></button>
+        <button><a href="/finance">پرداخت ها و امور مالی</a></button>
+        <button><a href="/news">پیام ها و اطلاعیه ها</a></button>
+      </div>
+    </div>
+
+  <div class="req-container">
+    <div class="req-header">
+      <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="student" class="req-avatar">
+      <h2>ثبت درخواست دانشجویی</h2>
+    </div>
+    <form class="req-form" id="requestForm" autocomplete="off">
+      <label for="reqTitle">عنوان درخواست:</label>
+      <input type="text" id="reqTitle" required placeholder="مثال: درخواست حذف اضطراری">
+      <label for="reqFrom">درخواست از:</label>
+      <input type="text" id="reqFrom" required placeholder="مثال: آموزش دانشکده">
+      <label for="reqBody">متن درخواست:</label>
+      <textarea id="reqBody" required placeholder="متن کامل درخواست خود را وارد کنید..."></textarea>
+      <button type="submit">
+        <span>ثبت درخواست</span>
+        <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </form>
+    <h3>لیست درخواست‌های ثبت شده</h3>
+    <table class="req-table" id="requestsTable">
+      <thead>
+        <tr>
+          <th>شماره</th>
+          <th>عنوان</th>
+          <th>درخواست از</th>
+          <th>وضعیت</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <script src="Requests.js"></script>
+</body>
+</html>
