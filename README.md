@@ -57,5 +57,5 @@ University-System/
 
 ## License
 
-ISC
-
+   This repository is licensed under the BSD-3-Clause License.
+   See the [LICENSE](./LICENSE) file for more details.
